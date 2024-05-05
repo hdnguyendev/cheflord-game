@@ -53,14 +53,14 @@ public class OptionsUI : MonoBehaviour
 
     private void Start()
     {
-        KitchenGameManager.Instance.OnContinueAction += KitchenGameManager_OnContinueAction;
+        KitchenGameManager.Instance.OnLocalContinueAction += KitchenGameManager_OnLocalContinueAction;
         UpdateVisual();
         Hide();
         HidePressToRebindKey();
 
     }
 
-    private void KitchenGameManager_OnContinueAction(object sender, EventArgs e)
+    private void KitchenGameManager_OnLocalContinueAction(object sender, EventArgs e)
     {
         Hide();
     }

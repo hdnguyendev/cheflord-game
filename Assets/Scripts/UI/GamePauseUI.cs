@@ -23,8 +23,8 @@ public class GamePauseUI : MonoBehaviour
 
     private void Start()
     {
-        KitchenGameManager.Instance.OnPauseAction += Instance_OnPauseAction;
-        KitchenGameManager.Instance.OnContinueAction += Instance_OnContinueAction;
+        KitchenGameManager.Instance.OnLocalPauseAction += Instance_OnLocalPauseAction;
+        KitchenGameManager.Instance.OnLocalContinueAction += Instance_OnLocalContinueAction;
 
         Hide();
     }
@@ -41,12 +41,12 @@ public class GamePauseUI : MonoBehaviour
     }
 
 
-    private void Instance_OnContinueAction(object sender, EventArgs e)
+    private void Instance_OnLocalContinueAction(object sender, EventArgs e)
     {
         Hide();
     }
 
-    private void Instance_OnPauseAction(object sender, EventArgs e)
+    private void Instance_OnLocalPauseAction(object sender, EventArgs e)
     {
         Show();
     }
