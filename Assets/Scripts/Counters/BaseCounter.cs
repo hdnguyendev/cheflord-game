@@ -12,7 +12,7 @@ public class BaseCounter : NetworkBehaviour, IKitchenObjectParent
         OnAnyObjectPlacedHere = null;
     }
     [SerializeField] protected Transform counterTopPoint;
-    protected KitchenObject kitchenObject;
+    private KitchenObject kitchenObject;
     public virtual void Interact(Player player)
     {
         Debug.Log("BaseCounter.Interact()");
