@@ -50,9 +50,16 @@ public class KitchenObject : NetworkBehaviour
     }
     public void DestroySelf()
     {
-        kitchenObjectParent.ClearKitchenObject();
         Destroy(gameObject);
     }
+
+
+    public void ClearKitchenObjectParent()
+    {
+        kitchenObjectParent.ClearKitchenObject();
+
+    }
+
     // Kiem tra thu co phai la dia khong, neu dung thi tra ve dia, sai thi tra ve null
     public bool TryGetPlate(out PlateKitchenObject plateKitchenObject)
     {
@@ -73,5 +80,10 @@ public class KitchenObject : NetworkBehaviour
     public static void SpawnKitchenObject(KitchenObjectSO kitchenObjectSO, IKitchenObjectParent kitchenObjectParent)
     {
         KitchenGameMultiplayer.Instance.SpawnKitchenObject(kitchenObjectSO, kitchenObjectParent);
+    }
+
+    public static void DestroyKitchenObject(KitchenObject kitchenObject)
+    {
+        KitchenGameMultiplayer.Instance.DestroyKitchenObject(kitchenObject);
     }
 }
