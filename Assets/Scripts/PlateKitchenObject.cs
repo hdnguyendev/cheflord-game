@@ -15,8 +15,9 @@ public class PlateKitchenObject : KitchenObject
     // List cac vat pham tren dia
     private List<KitchenObjectSO> kitchenObjectSOList;
 
-    public void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         kitchenObjectSOList = new List<KitchenObjectSO>();
     }
     // Them vat pham vao dia

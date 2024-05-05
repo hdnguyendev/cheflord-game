@@ -1,9 +1,10 @@
- using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
-public class DeliveryManager : MonoBehaviour
+public class DeliveryManager : NetworkBehaviour
 {
     public event EventHandler OnRecipeSpawned;
     public event EventHandler OnRecipeCompleted;
@@ -14,7 +15,7 @@ public class DeliveryManager : MonoBehaviour
     [SerializeField] private RecipeListSO recipeListSO;
     private List<RecipeSO> waitingRecipeSOList;
 
-    private float spawnRecipeTimer;
+    private float spawnRecipeTimer = 4f;
     // 4s co 1 recipe
     private float spawnRecipeTimerMax = 4f;
     private int waitingRecipeMax = 4;
@@ -28,8 +29,15 @@ public class DeliveryManager : MonoBehaviour
         successfulRecipesAmount = 0;
         playerScore = 0;
     }
+    // rpc mean remote procedure call
     private void Update()
     {
+        if (!IsServer)
+        {
+            return;
+        }
+
+
 
         spawnRecipeTimer -= Time.deltaTime;
         if (spawnRecipeTimer <= 0f)
@@ -38,24 +46,30 @@ public class DeliveryManager : MonoBehaviour
 
             if (KitchenGameManager.Instance.IsGamePlaying() && waitingRecipeSOList.Count < waitingRecipeMax)
             {
-                RecipeSO waitingRecipeSO = Instantiate(recipeListSO.GetRandomRecipeSO());
-                // thời gian hoàn thành món 
-                float timeLimit = waitingRecipeSO.timeLimit;
-                
-                waitingRecipeSOList.Add(waitingRecipeSO);
-
-                // đếm ngược, hết thời gian thì xóa ra khỏi list và trừ điểm
-                StartCoroutine(DestroyRecipe(waitingRecipeSO, timeLimit));
-
-                OnRecipeSpawned?.Invoke(this, EventArgs.Empty);
-
+                int waitingRecipeSOIndex = recipeListSO.GetRandomRecipeSOIndex();
+                SpawnNewWaitingRecipeClientRpc(waitingRecipeSOIndex);
             }
 
         }
     }
+    [ClientRpc]
+    private void SpawnNewWaitingRecipeClientRpc(int waitingRecipeSOIndex)
+    {
+
+        RecipeSO waitingRecipeSO = Instantiate(recipeListSO.recipeSOList[waitingRecipeSOIndex]);
+
+        float timeLimit = waitingRecipeSO.timeLimit;
+
+        waitingRecipeSOList.Add(waitingRecipeSO);
+
+        // đếm ngược, hết thời gian thì xóa ra khỏi list 
+        StartCoroutine(DestroyRecipe(waitingRecipeSO, timeLimit));
+
+        OnRecipeSpawned?.Invoke(this, EventArgs.Empty);
+    }
     private IEnumerator DestroyRecipe(RecipeSO waitingRecipeSO, float timeLimit)
     {
-        // time limit đếm ngược xong thì xóa ra khỏi lit và trừ điểm
+        // time limit đếm ngược xong thì xóa ra khỏi list
         yield return new WaitForSeconds(timeLimit);
         if (waitingRecipeSOList.Contains(waitingRecipeSO))
         {
@@ -94,21 +108,42 @@ public class DeliveryManager : MonoBehaviour
                 }
                 if (plateContentsMatchesRecipe)
                 {
-                    waitingRecipeSOList.RemoveAt(i);
-                    successfulRecipesAmount++;
-                    playerScore += waitingRecipeSO.points;
-                    OnRecipeCompleted?.Invoke(this, EventArgs.Empty);
-                    OnRecipeSuccess?.Invoke(this, EventArgs.Empty);
+                    int point = waitingRecipeSO.points;
+                    DeliverCorrectRecipeServerRpc(i, point);
                     return;
                 }
             }
-
+            // Player did not deliver the correct recipe
+            DeliverInCorrectRecipeServerRpc();
         }
+
+    }
+    [ServerRpc(RequireOwnership = false)]
+    private void DeliverInCorrectRecipeServerRpc()
+    {
+        DeliverInCorrectRecipeClientRpc();
+    }
+    [ClientRpc]
+    private void DeliverInCorrectRecipeClientRpc()
+    {
         OnRecipeFailed?.Invoke(this, EventArgs.Empty);
 
     }
 
-
+    [ServerRpc(RequireOwnership = false)]
+    private void DeliverCorrectRecipeServerRpc(int waitingRecipeSOListIndex, int point)
+    {
+        DeliverCorrectRecipeClientRpc(waitingRecipeSOListIndex, point);
+    }
+    [ClientRpc]
+    private void DeliverCorrectRecipeClientRpc(int waitingRecipeSOListIndex, int point)
+    {
+        waitingRecipeSOList.RemoveAt(waitingRecipeSOListIndex);
+        successfulRecipesAmount++;
+        playerScore += point;
+        OnRecipeCompleted?.Invoke(this, EventArgs.Empty);
+        OnRecipeSuccess?.Invoke(this, EventArgs.Empty);
+    }
     public List<RecipeSO> GetWaitingRecipeSOList()
     {
         return waitingRecipeSOList;

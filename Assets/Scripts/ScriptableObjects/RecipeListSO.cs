@@ -6,7 +6,7 @@ public class RecipeListSO : ScriptableObject
 {
     public List<RecipeSO> recipeSOList;
 
-    public RecipeSO GetRandomRecipeSO() {
-        return recipeSOList[Random.Range(0, recipeSOList.Count)];
+    public int GetRandomRecipeSOIndex() {
+        return Random.Range(0, recipeSOList.Count);
     }
 }
