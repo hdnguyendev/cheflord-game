@@ -12,9 +12,10 @@ public class DeliveryManager : NetworkBehaviour
     public event EventHandler OnRecipeFailed;
 
     public static DeliveryManager Instance { get; private set; }
-    [SerializeField] private RecipeListSO recipeListSO;
-    private List<RecipeSO> waitingRecipeSOList;
 
+    [SerializeField] private RecipeListSO recipeListSO;
+
+    private List<RecipeSO> waitingRecipeSOList;
     private float spawnRecipeTimer = 4f;
     // 4s co 1 recipe
     private float spawnRecipeTimerMax = 4f;
@@ -25,9 +26,12 @@ public class DeliveryManager : NetworkBehaviour
     private void Awake()
     {
         Instance = this;
-        waitingRecipeSOList = new List<RecipeSO>();
+
         successfulRecipesAmount = 0;
         playerScore = 0;
+
+        waitingRecipeSOList = new List<RecipeSO>();
+
     }
     // rpc mean remote procedure call
     private void Update()
