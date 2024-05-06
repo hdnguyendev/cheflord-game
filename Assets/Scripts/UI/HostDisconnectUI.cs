@@ -19,7 +19,7 @@ public class HostDisconnectUI : MonoBehaviour
 
     private void OnPlayAgainButtonClicked()
     {
-        Loader.Load(Loader.Scene.GameScene);
+        Loader.Load(Loader.Scene.MainMenuScene);
     }
     private void NetworkManager_OnClientDisconnectCallback(ulong clientId)
     {
