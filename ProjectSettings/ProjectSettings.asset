@@ -924,10 +924,10 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: 421519bd-5ec4-4e1d-892f-381123890c1f
+  cloudProjectId: beae0ae2-2e59-437b-8f58-25951478ce9b
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: KitchenChaos
+  projectName: Chef Lord Multiplayer
   organizationId: hdnguyendev
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
