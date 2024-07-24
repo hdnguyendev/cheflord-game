@@ -22,12 +22,14 @@ public class DeliveryManager : NetworkBehaviour
     private int waitingRecipeMax = 4;
     private int successfulRecipesAmount;
     private int playerScore;
+    private int missedRecipesAmount;
 
     private void Awake()
     {
         Instance = this;
 
         successfulRecipesAmount = 0;
+        missedRecipesAmount = 0;
         playerScore = 0;
 
         waitingRecipeSOList = new List<RecipeSO>();
@@ -82,7 +84,7 @@ public class DeliveryManager : NetworkBehaviour
             {
                 playerScore = 0;
             }
-
+            missedRecipesAmount++; 
             // OnRecipeFailed?.Invoke(this, EventArgs.Empty);
         }
     }
@@ -160,5 +162,9 @@ public class DeliveryManager : NetworkBehaviour
     public int GetPlayerScore()
     {
         return playerScore;
+    }
+    public int GetMissedRecipesAmount()
+    {
+        return missedRecipesAmount;
     }
 }

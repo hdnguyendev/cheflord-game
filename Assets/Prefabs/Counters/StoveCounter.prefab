@@ -632,6 +632,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6829661025540852569, guid: d580c6726c95496488df857303f3dc23,
+        type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 2633364838
+      objectReference: {fileID: 0}
     - target: {fileID: 8182936068170768261, guid: d580c6726c95496488df857303f3dc23,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -979,5 +984,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stoveCounter: {fileID: 1369647722934706792}
-  stoveOnGameObject: {fileID: 146197584208791439}
-  practiclesGameObject: {fileID: 5352546065645293574}
+  stoveOnGameObject: {fileID: 5352546065645293574}
+  particlesGameObject: {fileID: 146197584208791439}

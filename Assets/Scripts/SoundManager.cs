@@ -108,5 +108,14 @@ public class SoundManager : MonoBehaviour
     {
         return volume;
     }
+
+    private void OnDestroy() {
+        DeliveryManager.Instance.OnRecipeSuccess -= DeliveryManager_OnRecipeSuccess;
+        DeliveryManager.Instance.OnRecipeFailed -= DeliveryManager_OnRecipeFailed;
+        Player.OnAnyPickedSomething -= Player_OnPickupSomething;
+        CuttingCounter.OnAnyCut -= CuttingCounter_OnAnyCut;
+        BaseCounter.OnAnyObjectPlacedHere -= BaseCounter_OnAnyObjectPlacedHere;
+        TrashCounter.OnAnyObjectTrashed -= TrashCounter_OnAnyObjectTrashed;
+    }
 }
 

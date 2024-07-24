@@ -10,13 +10,16 @@ public class GameOverUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI recipesDeliveredText;
     [SerializeField] private TextMeshProUGUI playerScoreText;
+    [SerializeField] private TextMeshProUGUI recipesMissedText;
     [SerializeField] private Button playAgainButton;
     [SerializeField] private Button mainMenuButton;
+
     private void Start()
     {
         KitchenGameManager.Instance.OnStageChanged += KitchenGameManager_OnStageChanged;
         playAgainButton.onClick.AddListener(OnPlayAgainButtonClicked);
         mainMenuButton.onClick.AddListener(OnMainMenuButtonClicked);
+    
         Hide();
     }
 
@@ -28,7 +31,7 @@ public class GameOverUI : MonoBehaviour
     private void OnPlayAgainButtonClicked()
     {
         NetworkManager.Singleton.Shutdown();
-        Loader.Load(Loader.Scene.GameScene);
+        Loader.Load(Loader.Scene.LobbyScene);
     }
 
     private void KitchenGameManager_OnStageChanged(object sender, EventArgs e)
@@ -38,6 +41,8 @@ public class GameOverUI : MonoBehaviour
             Show();
             recipesDeliveredText.text = DeliveryManager.Instance.GetSuccessfulRecipesAmount().ToString();
             playerScoreText.text = DeliveryManager.Instance.GetPlayerScore().ToString();
+            recipesMissedText.text = DeliveryManager.Instance.GetMissedRecipesAmount().ToString();
+          
         }
         else
         {

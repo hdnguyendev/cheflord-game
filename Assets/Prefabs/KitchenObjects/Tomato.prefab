@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7578093734086670988}
-  - component: {fileID: -333653653287544768}
   - component: {fileID: 5034494743606261443}
+  - component: {fileID: -333653653287544768}
   - component: {fileID: -1709160646152836891}
   m_Layer: 0
   m_Name: Tomato
@@ -35,19 +35,6 @@ Transform:
   - {fileID: 7434300660587835954}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-333653653287544768
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6826580457632119507}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 445dc865043a93d4bb5dc61fd4312887, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  kitchenObjectSO: {fileID: 11400000, guid: 4238a630a6daa9240953c835f9383f0a, type: 2}
 --- !u!114 &5034494743606261443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68,6 +55,19 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+--- !u!114 &-333653653287544768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6826580457632119507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 445dc865043a93d4bb5dc61fd4312887, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  kitchenObjectSO: {fileID: 11400000, guid: 4238a630a6daa9240953c835f9383f0a, type: 2}
 --- !u!114 &-1709160646152836891
 MonoBehaviour:
   m_ObjectHideFlags: 0
